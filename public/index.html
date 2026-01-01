@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 Fresh Vegetables - Online Order System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <span class="logo-icon">🌾</span>
+                <span class="logo-text">FreshVeg</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#shop" class="nav-link">Shop</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="login-btn" id="loginBtn">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Fresh Vegetables Delivered to Your Door</h1>
+            <p>Quality produce, affordable prices, fast delivery</p>
+            <button class="cta-btn" onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })">
+                Shop Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <h2>Browse Our Products</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+                <button class="filter-btn" onclick="filterByCategory('Vegetables')">Vegetables</button>
+                <button class="filter-btn" onclick="filterByCategory('Leafy Greens')">Leafy Greens</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search vegetables..." onkeyup="searchVegetables()">
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products" id="shop">
+            <div class="grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-btn" onclick="closeCart()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cartItems"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-summary">
+                    <p>Subtotal: <span id="subtotal">₹0</span></p>
+                    <p>Delivery: <span id="delivery">₹50</span></p>
+                    <h3>Total: <span id="total">₹0</span></h3>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Customer Login / Register</h2>
+                <button class="close-btn" onclick="closeLogin()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                    <button class="tab-btn" onclick="switchTab('register')">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="loginForm" class="form-group">
+                    <input type="email" placeholder="Email" required id="loginEmail">
+                    <input type="password" placeholder="Password" required id="loginPassword">
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="form-group" style="display:none;">
+                    <input type="text" placeholder="Full Name" required id="regName">
+                    <input type="email" placeholder="Email" required id="regEmail">
+                    <input type="tel" placeholder="Phone" required id="regPhone">
+                    <input type="text" placeholder="Address" required id="regAddress">
+                    <button type="submit" class="submit-btn">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2>Checkout</h2>
+                <button class="close-btn" onclick="closeCheckout()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" class="checkout-form">
+                    <h3>Delivery Information</h3>
+                    <div class="form-row">
+                        <input type="text" placeholder="Full Name" required id="checkoutName">
+                        <input type="tel" placeholder="Phone" required id="checkoutPhone">
+                    </div>
+                    <textarea placeholder="Delivery Address" required id="checkoutAddress" rows="3"></textarea>
+                    
+                    <h3>Order Summary</h3>
+                    <div id="checkoutSummary"></div>
+                    
+                    <div class="payment-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-options">
+                            <label><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label>
+                            <label><input type="radio" name="payment" value="upi"> UPI</label>
+                            <label><input type="radio" name="payment" value="card"> Debit/Credit Card</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn btn-large">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>Order Placed Successfully! 🎉</h2>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">✓</div>
+                <p>Your order has been placed and will be delivered soon.</p>
+                <p>Order ID: <strong id="orderIdDisplay"></strong></p>
+                <p>Estimated Delivery: <strong id="deliveryDateDisplay"></strong></p>
+                <button class="submit-btn" onclick="location.reload()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2>About FreshVeg</h2>
+        <p>We deliver the freshest vegetables directly from farms to your kitchen. Quality guaranteed, prices competitive, service excellent.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <p>📞 Phone: +91 98765 43210</p>
+            <p>📧 Email: support@freshveg.com</p>
+            <p>📍 Address: 123 Farm Road, Agriculture City</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 FreshVeg - Online Vegetable Store. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

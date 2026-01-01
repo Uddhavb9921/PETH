@@ -1,0 +1,90 @@
+[
+  {
+    "id": "veg-001",
+    "name": "Tomato",
+    "category": "Vegetables",
+    "price": 50,
+    "unit": "kg",
+    "image": "tomato.jpg",
+    "description": "Fresh red tomatoes",
+    "stock": 100,
+    "rating": 4.5
+  },
+  {
+    "id": "veg-002",
+    "name": "Potato",
+    "category": "Vegetables",
+    "price": 30,
+    "unit": "kg",
+    "image": "potato.jpg",
+    "description": "Fresh potatoes",
+    "stock": 150,
+    "rating": 4.3
+  },
+  {
+    "id": "veg-003",
+    "name": "Carrot",
+    "category": "Vegetables",
+    "price": 40,
+    "unit": "kg",
+    "image": "carrot.jpg",
+    "description": "Fresh orange carrots",
+    "stock": 80,
+    "rating": 4.6
+  },
+  {
+    "id": "veg-004",
+    "name": "Onion",
+    "category": "Vegetables",
+    "price": 35,
+    "unit": "kg",
+    "image": "onion.jpg",
+    "description": "Fresh yellow onions",
+    "stock": 200,
+    "rating": 4.2
+  },
+  {
+    "id": "veg-005",
+    "name": "Cucumber",
+    "category": "Vegetables",
+    "price": 45,
+    "unit": "kg",
+    "image": "cucumber.jpg",
+    "description": "Fresh green cucumbers",
+    "stock": 60,
+    "rating": 4.4
+  },
+  {
+    "id": "veg-006",
+    "name": "Spinach",
+    "category": "Leafy Greens",
+    "price": 60,
+    "unit": "bunch",
+    "image": "spinach.jpg",
+    "description": "Fresh spinach leaves",
+    "stock": 50,
+    "rating": 4.7
+  },
+  {
+    "id": "veg-007",
+    "name": "Bell Pepper",
+    "category": "Vegetables",
+    "price": 70,
+    "unit": "kg",
+    "image": "pepper.jpg",
+    "description": "Colorful bell peppers",
+    "stock": 40,
+    "rating": 4.5
+  },
+  {
+    "id": "veg-008",
+    "name": "Broccoli",
+    "category": "Vegetables",
+    "price": 65,
+    "unit": "kg",
+    "image": "broccoli.jpg",
+    "description": "Fresh broccoli heads",
+    "stock": 35,
+    "rating": 4.6
+  }
+]
