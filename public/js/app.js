@@ -66,27 +66,43 @@ function displayProducts(products) {
     const grid = document.getElementById('productsGrid');
     grid.innerHTML = '';
 
+    if (products.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem;">No products found</p>';
+        return;
+    }
+
+    const emojiMap = {
+        'Tomato': '🍅', 'Potato': '🥔', 'Carrot': '🥕', 'Onion': '🧅',
+        'Cucumber': '🥒', 'Spinach': '🥬', 'Bell Pepper': '🫑', 'Broccoli': '🥦'
+    };
+
     products.forEach(v => {
         const card = document.createElement('div');
         card.className = 'product-card';
+        const emoji = emojiMap[v.name] || '🥬';
+        const isOutOfStock = v.stock === 0;
 
         card.innerHTML = `
+            <div class="product-image">${emoji}</div>
             <div class="product-info">
-                <h3>${v.name}</h3>
-                <p>${v.description}</p>
-                <p><b>₹${v.price}/${v.unit}</b></p>
-
-                <div class="quantity-selector">
-                    <button onclick="changeQty(this,-1)">−</button>
-                    <input type="number" class="qty-input" value="1" min="1">
-                    <button onclick="changeQty(this,1)">+</button>
+                <div class="product-name">${v.name}</div>
+                <div class="product-category">${v.category}</div>
+                <div class="product-description">${v.description}</div>
+                <div class="product-rating">⭐ ${v.rating || 4.5}/5</div>
+                <div class="product-price">₹${v.price}/${v.unit}</div>
+                <div class="product-stock ${isOutOfStock ? 'out-of-stock' : 'in-stock'}">
+                    Stock: ${isOutOfStock ? 'Out of Stock' : v.stock + ' ' + v.unit}
                 </div>
-
-                <button class="add-to-cart-btn"
-                    onclick="addToCart('${v.id}', this)"
-                    ${v.stock === 0 ? 'disabled' : ''}>
-                    ${v.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-                </button>
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+                        <input type="number" class="qty-input" value="1" min="1" max="${v.stock || 1}">
+                        <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${v.id}', this)" ${isOutOfStock ? 'disabled' : ''}>
+                        ${isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+                    </button>
+                </div>
             </div>
         `;
         grid.appendChild(card);
@@ -201,7 +217,7 @@ function logout() {
 }
 
 // ================== FILTER ==================
-function filterByCategory(cat, event) {
+function filterByCategory(cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
 
@@ -231,3 +247,58 @@ window.onclick = e => {
             if (e.target === m) m.classList.remove('active');
         });
 };
+
+// ================== CHECKOUT ==================
+function checkout() {
+    if (!currentCustomer) {
+        alert('Please login first');
+        closeCart();
+        openLogin();
+        return;
+    }
+    if (cart.length === 0) {
+        alert('Cart is empty');
+        return;
+    }
+    closeCart();
+    document.getElementById('checkoutModal').classList.add('active');
+}
+
+function closeCheckout() {
+    document.getElementById('checkoutModal').classList.remove('active');
+}
+
+function submitOrder() {
+    alert('Order placed! We will contact you soon.');
+    cart = [];
+    updateCartDisplay();
+    closeCheckout();
+}
+
+// ================== TAB SWITCHING ==================
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.form-group').forEach(f => f.style.display = 'none');
+    
+    event.target.classList.add('active');
+    document.getElementById(tab === 'login' ? 'loginForm' : 'registerForm').style.display = 'flex';
+}
+
+// ================== REGISTER ==================
+function registerCustomer() {
+    const name = document.getElementById('regName')?.value;
+    const email = document.getElementById('regEmail')?.value;
+    const phone = document.getElementById('regPhone')?.value;
+    const address = document.getElementById('regAddress')?.value;
+
+    if (!name || !email || !phone || !address) {
+        alert('Fill all fields');
+        return;
+    }
+
+    currentCustomer = { name, email, phone, address, id: 'cust-' + Date.now() };
+    localStorage.setItem('currentCustomer', JSON.stringify(currentCustomer));
+    closeLogin();
+    updateLoginButton();
+    alert('Registration successful!');
+}
