@@ -4,7 +4,8 @@ let cart = [];
 let currentCustomer = null;
 let filteredVegetables = [];
 
-const API_URL = 'http://localhost:5000/api';
+// Dynamically detect API URL based on current location
+const API_URL = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/api`;
 const WHATSAPP_NUMBER = '919921709556';
 
 // ================== LOCAL STORAGE ==================

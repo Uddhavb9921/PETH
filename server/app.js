@@ -293,7 +293,22 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`🌾 Vegetable Order System running on http://localhost:${PORT}`);
-  console.log('📱 Access the portal at http://localhost:3000');
+const hostname = '0.0.0.0';
+app.listen(PORT, hostname, () => {
+  const os = require('os');
+  const interfaces = os.networkInterfaces();
+  let ipAddress = 'localhost';
+  
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        ipAddress = iface.address;
+        break;
+      }
+    }
+  }
+  
+  console.log(`🌾 Vegetable Order System running on http://${ipAddress}:${PORT}`);
+  console.log(`📱 Access the portal at http://${ipAddress}:${PORT}`);
+  console.log(`🔗 Local: http://localhost:${PORT}`);
 });
