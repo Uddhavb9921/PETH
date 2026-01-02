@@ -151,6 +151,30 @@
         </div>
     </div>
 
+    <!-- Order Form Modal -->
+    <div class="modal" id="orderFormModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h2>📝 Order Slip</h2>
+                <button class="close-btn" onclick="closeOrderForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="orderFormQuick" class="form-group" onsubmit="submitOrderForm(event)">
+                    <input type="text" placeholder="Full Name" required id="orderName">
+                    <input type="tel" placeholder="WhatsApp Number (10 digits)" required id="orderPhone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
+                    <input type="text" placeholder="Address" required id="orderAddress">
+                    <input type="hidden" id="orderProductName" value="">
+                    <input type="hidden" id="orderQuantity" value="">
+                    <input type="hidden" id="orderPrice" value="">
+                    <textarea placeholder="Special Instructions (Optional)" id="orderInstructions" rows="2"></textarea>
+                    <button type="submit" class="submit-btn" style="background: #25D366; width: 100%; margin-top: 1rem;">
+                        📱 Send to WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Success Modal -->
     <div class="modal" id="successModal">
         <div class="modal-content modal-sm">
@@ -162,6 +186,8 @@
                 <p>Your order has been placed and will be delivered soon.</p>
                 <p>Order ID: <strong id="orderIdDisplay"></strong></p>
                 <p>Estimated Delivery: <strong id="deliveryDateDisplay"></strong></p>
+                <a id="whatsappLink" href="#" target="_blank" class="whatsapp-btn" style="display: inline-block; margin: 1rem 0; padding: 0.75rem 1.5rem; background: #25D366; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">📱 Share on WhatsApp</a>
+                <br>
                 <button class="submit-btn" onclick="location.reload()">Continue Shopping</button>
             </div>
         </div>
@@ -177,7 +203,9 @@
     <section class="contact" id="contact">
         <h2>Contact Us</h2>
         <div class="contact-info">
+            <p><strong>Owner: Uddhav Bhandarge</strong></p>
             <p>📞 Phone: +91 9921709556</p>
+            <p>💬 WhatsApp: <a href="https://wa.me/919921709556" target="_blank">+91 9921709556</a></p>
             <p>📧 Email: uddhavbhandarge@gmail.com</p>
             <p>📍 Address: Khamgaon Road Peth, Near Ambika Mata Temple</p>
         </div>
